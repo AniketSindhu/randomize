@@ -15,39 +15,46 @@ class _homePageState extends State<homePage> {
     var height=SizeConfig.getHeight(context);
     var width=SizeConfig.getWidth(context);
     return Scaffold(
-      body:Column(
-        children: <Widget>[
-          Container(
-            alignment: Alignment.center,
-            height: height/5,
-            margin: EdgeInsets.symmetric(horizontal:width/20,vertical: height/13),
-            child: Column(
-              children: <Widget>[
-                Text("Randomize",style:TextStyle(fontWeight:FontWeight.bold,fontSize:26)),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text("A random quote",style:TextStyle(fontSize:16)))
-              ],
-            ),
-          ),
-          Expanded(
-            child:Container(
-              margin: EdgeInsets.symmetric(horizontal:width/20),
-              child: GridView.count(
-                crossAxisCount: 2,
-                children: List.generate(choices.length,(index){
-                  return Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 10, 16),
-                    child: card(choice: choices[index]),
-                  );
-                  }
-                )
-              ),
+      body:CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            backgroundColor: AppColors.primaryWhite,
+            pinned: true,
+            floating: true,
+            expandedHeight: height/3.5,
+            title: Text("Randomize",style:TextStyle(fontWeight:FontWeight.bold,fontSize:30,color: Colors.black)),
+            centerTitle: true,
+            flexibleSpace: FlexibleSpaceBar(
+              background: Container(
+                alignment: Alignment.center,
+                margin: EdgeInsets.only(left:width/20,right:width/20,top: height/9.6),
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(top:14),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text("A random quote:",style:TextStyle(fontSize:18))),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top:8),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(" It’s going to be hard, but hard does not mean impossible.",style:TextStyle(fontSize:22,fontWeight: FontWeight.w500,),textAlign: TextAlign.start)),
+                    )
+                  ],
+                ),
+              )
             )
-          )
-        ],
-      ),
-      backgroundColor: AppColors.primaryWhite,
-    );
-  }
-}
+          ),
+          SliverGrid.count(
+            crossAxisCount: 2,
+            children: List.generate(choices.length,(index){
+            return card(choice: choices[index]);
+          }
+        )
+      )
+    ]
+  ),
+  backgroundColor: AppColors.primaryWhite,);
+}}
