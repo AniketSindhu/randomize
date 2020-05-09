@@ -3,6 +3,9 @@ import 'card.dart';
 import 'config/colors.dart';
 import 'config/size.dart';
 import 'cardName.dart';
+import 'package:http/http.dart' as http;
+import 'data/quotes.dart';
+import 'dart:convert';
 
 class homePage extends StatefulWidget {
   @override
@@ -10,6 +13,24 @@ class homePage extends StatefulWidget {
 }
 
 class _homePageState extends State<homePage> { 
+  
+  Future<Quotes> quotes;
+  Future<Quotes> fetchQuotes() async {
+  final response = await http.get('https://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json');
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    return Quotes.fromJson(json.decode(response.body));
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load album');
+  }
+}
+  void iniState(){
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     var height=SizeConfig.getHeight(context);
@@ -40,7 +61,18 @@ class _homePageState extends State<homePage> {
                       padding: const EdgeInsets.only(top:8),
                       child: Align(
                         alignment: Alignment.centerLeft,
-                        child: Text(" It’s going to be hard, but hard does not mean impossible.",style:TextStyle(fontSize:22,fontWeight: FontWeight.w500,),textAlign: TextAlign.start)),
+                        child: FutureBuilder<Quotes>(
+                          future: fetchQuotes(),
+                          builder: (context, snapshot) {
+                            if(snapshot.hasData){
+                            return Text("${snapshot.data.quoteText}",style:TextStyle(fontSize:21,fontWeight: FontWeight.w500,),textAlign: TextAlign.start);
+                            }
+                            else if(snapshot.hasError){
+                            return Text("${snapshot.error}");
+                            }
+                            return Center(child: CircularProgressIndicator());
+                          }
+                        )),
                     )
                   ],
                 ),
