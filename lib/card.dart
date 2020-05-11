@@ -4,20 +4,26 @@ import 'package:randomize/config/colors.dart';
 import 'cardName.dart';
 import 'methods.dart';
 
-class card extends StatefulWidget {
-  const card({Key key, this.choice}) : super(key: key);
+class Cards extends StatefulWidget {
+  const Cards({Key key, this.choice}) : super(key: key);
   final Choice choice;
   @override
-  _cardState createState() => _cardState();
+  _CardsState createState() => _CardsState();
 }
 
-class _cardState extends State<card> {
+class _CardsState extends State<Cards> {
 
   detectTap(Choice choice,BuildContext context){
     switch (choice.title) {
       case "Random Number":randomNumber(context);
         break;
       case "Roll a dice":dice(context);
+        break;
+      case "Flip a coin":coin(context);
+        break;
+      case "Random card":card(context);
+        break;
+      case "Random name":name(context);
         break;
       default:
     }

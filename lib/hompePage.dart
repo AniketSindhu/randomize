@@ -6,15 +6,20 @@ import 'cardName.dart';
 import 'package:http/http.dart' as http;
 import 'data/quotes.dart';
 import 'dart:convert';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'globals.dart'as globals;
+import 'APIs.dart';
 
-class homePage extends StatefulWidget {
+
+class HomePage extends StatefulWidget {
   @override
-  _homePageState createState() => _homePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _homePageState extends State<homePage> { 
+class _HomePageState extends State<HomePage> { 
   
   Future<Quotes> quotes;
+
   Future<Quotes> fetchQuotes() async {
   final response = await http.get('https://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json');
 
@@ -28,8 +33,19 @@ class _homePageState extends State<homePage> {
     throw Exception('Failed to load album');
   }
 }
-  void iniState(){
+
+  void initState(){
     super.initState();
+    fetchDeck().then((data) {
+      globals.deck_id=data.deck_id;
+      fetchCard(globals.deck_id).then((data1) {
+        globals.image=data1.list[0]['image'];
+        globals.remaining=data1.remaining;
+      });
+    });
+    fetchName().then((data) {
+      globals.name=data.name;
+      print("${globals.name}");});
   }
   @override
   Widget build(BuildContext context) {
@@ -57,18 +73,17 @@ class _homePageState extends State<homePage> {
                         alignment: Alignment.centerLeft,
                         child: Text("A random quote:",style:TextStyle(fontSize:18))),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top:8),
+                    Expanded(
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: FutureBuilder<Quotes>(
                           future: fetchQuotes(),
                           builder: (context, snapshot) {
                             if(snapshot.hasData){
-                            return Text("${snapshot.data.quoteText}",style:TextStyle(fontSize:21,fontWeight: FontWeight.w500,),textAlign: TextAlign.start);
+                            return AutoSizeText("${snapshot.data.quoteText}",style:TextStyle(fontSize:21,fontWeight: FontWeight.w500,),textAlign: TextAlign.start);
                             }
                             else if(snapshot.hasError){
-                            return Text("${snapshot.error}");
+                            return AutoSizeText("Everything is good if you have good internet",style:TextStyle(fontSize:21,fontWeight: FontWeight.w500,),textAlign: TextAlign.start);
                             }
                             return Center(child: CircularProgressIndicator());
                           }
@@ -82,7 +97,7 @@ class _homePageState extends State<homePage> {
           SliverGrid.count(
             crossAxisCount: 2,
             children: List.generate(choices.length,(index){
-            return card(choice: choices[index]);
+            return Cards(choice: choices[index]);
           }
         )
       )
