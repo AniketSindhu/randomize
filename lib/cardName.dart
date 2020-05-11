@@ -14,6 +14,7 @@ import 'package:flutter_icons/flutter_icons.dart';
     const Choice(title: 'Roll a dice', icon: Icon(FlutterIcons.dice_faw5s,color: Colors.teal,size: 60,)),
     const Choice(title: 'Flip a coin', icon: Icon(FlutterIcons.coins_faw5s,color: Colors.teal,size: 60,)),
     const Choice(title: 'Random card', icon: Icon(FlutterIcons.cards_playing_outline_mco,color: Colors.teal,size: 60,)),
+    const Choice(title: 'Yes or no', icon: Icon(FlutterIcons.thumbs_up_faw5s,color: Colors.teal,size: 60,)),
     const Choice(title: 'Random name', icon: Icon(FlutterIcons.signature_faw5s,color: Colors.teal,size: 60,)),
     const Choice(title: 'Random car', icon: Icon(FlutterIcons.car_faw5s,color: Colors.teal,size: 60,)),
     const Choice(title: 'Random movie', icon: Icon(FlutterIcons.film_faw5s,color: Colors.teal,size: 60,)),

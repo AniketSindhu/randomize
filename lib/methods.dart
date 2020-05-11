@@ -6,6 +6,7 @@ import 'config/colors.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'globals.dart'as globals;
 import 'data/Movies.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'APIs.dart';
 
 randomNumber(BuildContext context){
@@ -411,7 +412,7 @@ randomNumber(BuildContext context){
               backgroundColor: AppColors.primaryWhite,
               title:Center(child: Text("Random Name",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),)),
               content: Center(
-                child: Text(globals.name==null?"":globals.name,style: TextStyle(color: Colors.redAccent,fontWeight: FontWeight.w500,fontSize: 30),),
+                child: Text(globals.name==null?"":globals.name,style: TextStyle(color: Colors.redAccent,fontWeight: FontWeight.w500,fontSize: 30),textAlign: TextAlign.center,),
               )
             );
           }
@@ -478,6 +479,173 @@ randomNumber(BuildContext context){
                     Text("Ttile:${globals.movieList[rand].title}",style: TextStyle(color: Colors.redAccent,fontWeight: FontWeight.w500,fontSize: 18),textAlign: TextAlign.center,),
                     Text("Year:${globals.movieList[rand].year}",style: TextStyle(color: Colors.redAccent,fontWeight: FontWeight.w500,fontSize: 18),),
                     Text("IMDb rating:${globals.movieList[rand].rating}",style: TextStyle(color: Colors.redAccent,fontWeight: FontWeight.w500,fontSize: 18),)
+                  ],
+                ),
+              )
+            );
+          }
+        );
+      }
+    );
+  }
+
+  facts(BuildContext context){
+    String fact=globals.fact;
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return StatefulBuilder(
+          builder:(context,setState){
+            return AlertDialog(
+              scrollable: true,
+              actions: <Widget>[
+                RaisedButton(
+                  onPressed:(){
+                    fetchFact().then((value) {
+                      globals.fact=value.fact;
+                    });                 
+                    setState((){
+                      fact=globals.fact;
+                    });
+                  },
+                  child:Text("Draw",style: TextStyle(fontSize:20,fontWeight: FontWeight.bold,color: Colors.black)),
+                  color: Colors.teal,
+                  disabledColor: Colors.teal,
+                ),
+                SizedBox(width: 20,),                               
+                FlatButton(
+                  onPressed:(){
+                    Navigator.pop(context);},
+                  child: Text("Done",style: TextStyle(fontSize:18),)),
+              ],
+              backgroundColor: AppColors.primaryWhite,
+              title:Center(child: Text("Random Fact",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),)),
+              content: Center(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      child:Center(child: Text(fact==null?"":fact,style: TextStyle(fontSize:20,fontWeight: FontWeight.w500,color:Colors.purpleAccent),textAlign: TextAlign.center,))
+                    ),                    
+                  ],
+                ),
+              )
+            );
+          }
+        );
+      }
+    );
+  }
+
+ yesNo(BuildContext context){
+    int rand;
+    String result;
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return StatefulBuilder(
+          builder:(context,setState){
+            return AlertDialog(
+              scrollable: true,
+              actions: <Widget>[
+                RaisedButton(
+                  onPressed:(){
+                    fetchFact().then((value) {
+                      globals.fact=value.fact;
+                    });                 
+                    setState((){
+                      rand=Random().nextInt(6)+1;
+                      switch (rand) {
+                        case 1:result="Yes";
+                          break;
+                        case 2:result="No";
+                          break;
+                        case 3:result="Definitely not";
+                          break;
+                        case 4:result="Yeah go for it";
+                          break;
+                        case 5:result="Hell no";
+                          break;                
+                        case 6:result="Yes,it is the best chance";
+                          break;        
+                        default:
+                      }
+                    });
+                  },
+                  child:Text("Tap here",style: TextStyle(fontSize:20,fontWeight: FontWeight.bold,color: Colors.black)),
+                  color: Colors.teal,
+                  disabledColor: Colors.teal,
+                ),
+                SizedBox(width: 20,),                               
+                FlatButton(
+                  onPressed:(){
+                    Navigator.pop(context);},
+                  child: Text("Done",style: TextStyle(fontSize:18),)),
+              ],
+              backgroundColor: AppColors.primaryWhite,
+              title:Center(child: Text("Yes or No",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),)),
+              content: Center(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      child:Center(child: Text(rand==null?"Ask the app a question and tap on the button below to get the answer":result,style: TextStyle(fontSize:20,fontWeight: FontWeight.w500,color:Colors.pinkAccent),textAlign: TextAlign.center,))
+                    ),                    
+                  ],
+                ),
+              )
+            );
+          }
+        );
+      }
+    );
+  }
+  countries(BuildContext context){
+    Random random = new Random();
+    int rand=(0+ random.nextInt(190)); 
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return StatefulBuilder(
+          builder:(context,setState){
+            return AlertDialog(
+              scrollable: true,
+              actions: <Widget>[
+                RaisedButton(
+                  onPressed:(){                  
+                    setState((){
+                      rand=(0+ random.nextInt(190));
+                      print(rand);
+                    });
+                  },
+                  child:Text("Draw",style: TextStyle(fontSize:20,fontWeight: FontWeight.bold,color: Colors.black)),
+                  color: Colors.teal,
+                  disabledColor: Colors.teal,
+                ),
+                SizedBox(width: 20,),                               
+                FlatButton(
+                  onPressed:(){
+                    Navigator.pop(context);},
+                  child: Text("Done",style: TextStyle(fontSize:18),)),
+              ],
+              backgroundColor: AppColors.primaryWhite,
+              title:Center(child: Text("Random Country",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),)),
+              content: Center(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      child:SvgPicture.network(
+                              '${globals.countryList[rand].url}',
+                              semanticsLabel: 'Flag',
+                              width: MediaQuery.of(context).size.width/2,
+                              height: MediaQuery.of(context).size.width/2,
+                              placeholderBuilder: (BuildContext context) => Container(
+                                padding: const EdgeInsets.all(30.0),
+                                child: const CircularProgressIndicator()),
+                            )
+                    ),
+                    SizedBox(height:10),
+                    Text("Ttile:${globals.countryList[rand].name}",style: TextStyle(color: Colors.indigo,fontWeight: FontWeight.w500,fontSize: 18),textAlign: TextAlign.center,),
+                    Text("Captial:${globals.countryList[rand].capital}",style: TextStyle(color: Colors.indigo,fontWeight: FontWeight.w500,fontSize: 18),),
+                    Text("Continent:${globals.countryList[rand].continent}",style: TextStyle(color: Colors.indigo,fontWeight: FontWeight.w500,fontSize: 18),),
                   ],
                 ),
               )

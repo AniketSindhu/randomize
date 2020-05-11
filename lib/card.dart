@@ -27,6 +27,12 @@ class _CardsState extends State<Cards> {
         break;
       case "Random movie":movies(context);
         break;
+      case "Random fact":facts(context);
+        break;
+      case "Yes or no":yesNo(context);
+        break;
+      case "Random country":countries(context);
+        break;
       default:
     }
   }
