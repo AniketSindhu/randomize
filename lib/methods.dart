@@ -1,9 +1,11 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:randomize/card.dart';
 import 'dart:math';
 import 'config/colors.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'globals.dart'as globals;
+import 'data/Movies.dart';
 import 'APIs.dart';
 
 randomNumber(BuildContext context){
@@ -417,3 +419,72 @@ randomNumber(BuildContext context){
       }
     );
   }
+  movies(BuildContext context){
+    const menuitems=<String>["Hollywood","Bollywood"];
+    Random random = new Random();
+    int rand=(0+ random.nextInt(116));
+    String selected="Hollywood"; 
+    final List<DropdownMenuItem<String>>_dropmenuitems=menuitems.map((String value) => DropdownMenuItem<String>(child:Text(value),value:value.toString(),)).toList();
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return StatefulBuilder(
+          builder:(context,setState){
+            return AlertDialog(
+              scrollable: true,
+              actions: <Widget>[
+                RaisedButton(
+                  onPressed:(){                  
+                    setState((){
+                      rand=(0+ random.nextInt(116));
+                      print(rand);
+                    });
+                  },
+                  child:Text("Draw",style: TextStyle(fontSize:20,fontWeight: FontWeight.bold,color: Colors.black)),
+                  color: Colors.teal,
+                  disabledColor: Colors.teal,
+                ),
+                SizedBox(width: 20,),                               
+                FlatButton(
+                  onPressed:(){
+                    Navigator.pop(context);},
+                  child: Text("Done",style: TextStyle(fontSize:18),)),
+              ],
+              backgroundColor: AppColors.primaryWhite,
+              title:Center(child: Text("Random Movie",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),)),
+              content: Center(
+                child: Column(
+                  children: <Widget>[
+                    DropdownButton(
+                      items:_dropmenuitems,
+                      value: selected,
+                      iconDisabledColor: Colors.teal,
+                      iconEnabledColor: Colors.teal,
+                      style: TextStyle(color:Colors.teal,fontWeight:FontWeight.w500,fontSize: 18),
+                      onChanged:(String value){
+                       setState(() {
+                        selected=value;
+                        value=="Hollywood"?fetchMovie(true):fetchMovie(false);
+                      });
+                      }
+                    ),
+                    Container(
+                      child:Image(
+                        width: MediaQuery.of(context).size.width/2,
+                        height: MediaQuery.of(context).size.height/3,
+                        fit: BoxFit.fill,
+                        image:NetworkImage(globals.movieList[rand].url))),                    
+                    SizedBox(height:10),
+                    Text("Ttile:${globals.movieList[rand].title}",style: TextStyle(color: Colors.redAccent,fontWeight: FontWeight.w500,fontSize: 18),textAlign: TextAlign.center,),
+                    Text("Year:${globals.movieList[rand].year}",style: TextStyle(color: Colors.redAccent,fontWeight: FontWeight.w500,fontSize: 18),),
+                    Text("IMDb rating:${globals.movieList[rand].rating}",style: TextStyle(color: Colors.redAccent,fontWeight: FontWeight.w500,fontSize: 18),)
+                  ],
+                ),
+              )
+            );
+          }
+        );
+      }
+    );
+  }
+

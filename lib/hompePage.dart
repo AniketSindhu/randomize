@@ -46,6 +46,7 @@ class _HomePageState extends State<HomePage> {
     fetchName().then((data) {
       globals.name=data.name;
       print("${globals.name}");});
+    fetchMovie(true);
   }
   @override
   Widget build(BuildContext context) {

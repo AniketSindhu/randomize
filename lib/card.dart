@@ -25,6 +25,8 @@ class _CardsState extends State<Cards> {
         break;
       case "Random name":name(context);
         break;
+      case "Random movie":movies(context);
+        break;
       default:
     }
   }

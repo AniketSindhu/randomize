@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:randomize/data/Movies.dart';
 import 'package:randomize/data/name.dart';
 import 'data/cards.dart';
+import 'globals.dart'as globals;
 
 Future<Deck> fetchDeck() async {
   final response = await http.get('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1');
@@ -45,3 +47,15 @@ Future<Name> fetchName() async {
     throw Exception('Failed to load deck');
   }
 }
+
+ fetchMovie(bool en) async {
+
+  final response = await http.get(en?'https://raw.githubusercontent.com/FEND16/movie-json-data/master/json/top-rated-movies-01.json':'https://raw.githubusercontent.com/FEND16/movie-json-data/master/json/top-rated-indian-movies-01.json');
+  if (response.statusCode == 200) {
+      globals.movieList = (json.decode(response.body) as List)
+          .map((data) => new Movie.fromJson(data))
+          .toList();
+  } else {
+    throw Exception('Failed to load deck');
+    }
+  }
