@@ -33,6 +33,10 @@ class _CardsState extends State<Cards> {
         break;
       case "Random country":countries(context);
         break;
+      case "Random game":games(context);
+        break;
+      case "Random password":randomPass(context);
+        break;
       default:
     }
   }

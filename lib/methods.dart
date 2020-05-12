@@ -7,6 +7,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'globals.dart'as globals;
 import 'data/Movies.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mock_data/mock_data.dart';
 import 'APIs.dart';
 
 randomNumber(BuildContext context){
@@ -332,13 +333,13 @@ randomNumber(BuildContext context){
                         });
                       });                    
                     },
-                    child:Text("New Deck",style: TextStyle(fontSize:20,fontWeight: FontWeight.bold,color: Colors.black)),
+                    child:Text("New Deck",style: TextStyle(fontSize:18,fontWeight: FontWeight.bold,color: Colors.black)),
                     color: Colors.redAccent,
                     disabledColor: Colors.redAccent,
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(4.0),
+                  padding: const EdgeInsets.all(3.0),
                   child: RaisedButton(
                     onPressed:(){
                       fetchCard(globals.deck_id).then((data1) {
@@ -348,7 +349,7 @@ randomNumber(BuildContext context){
                       setState(() {
                       });                   
                     },
-                    child:Text("Draw",style: TextStyle(fontSize:20,fontWeight: FontWeight.bold,color: Colors.black)),
+                    child:Text("Draw",style: TextStyle(fontSize:18,fontWeight: FontWeight.bold,color: Colors.black)),
                     color: Colors.teal,
                     disabledColor: Colors.teal,
                   ),
@@ -385,6 +386,9 @@ randomNumber(BuildContext context){
   }
 
   name(BuildContext context){
+    const menuitems=<String>["Male","Female"];
+    String selected='Male';
+    final List<DropdownMenuItem<String>>_dropmenuitems=menuitems.map((String value) => DropdownMenuItem<String>(child:Text(value),value:value.toString(),)).toList();
     showDialog(
       context: context,
       builder: (BuildContext context){
@@ -396,7 +400,6 @@ randomNumber(BuildContext context){
                 RaisedButton(
                   onPressed:(){               
                     setState(() {
-                      fetchName().then((data) {globals.name=data.name;});
                     });
                   },
                   child:Text("Try again",style: TextStyle(fontSize:20,fontWeight: FontWeight.bold,color: Colors.black)),
@@ -412,7 +415,23 @@ randomNumber(BuildContext context){
               backgroundColor: AppColors.primaryWhite,
               title:Center(child: Text("Random Name",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),)),
               content: Center(
-                child: Text(globals.name==null?"":globals.name,style: TextStyle(color: Colors.redAccent,fontWeight: FontWeight.w500,fontSize: 30),textAlign: TextAlign.center,),
+                child: Column(
+                  children: <Widget>[
+                   DropdownButton(
+                      items:_dropmenuitems,
+                      value: selected,
+                      iconDisabledColor: Colors.teal,
+                      iconEnabledColor: Colors.teal,
+                      style: TextStyle(color:Colors.teal,fontWeight:FontWeight.w500,fontSize: 18),
+                      onChanged:(String value){
+                       setState(() {
+                        selected=value;
+                      });
+                      }
+                    ),
+                    Text(mockName('${selected.toLowerCase()}'),style: TextStyle(color: Colors.redAccent,fontWeight: FontWeight.w500,fontSize: 30),textAlign: TextAlign.center,),
+                  ],
+                ),
               )
             );
           }
@@ -643,9 +662,234 @@ randomNumber(BuildContext context){
                             )
                     ),
                     SizedBox(height:10),
-                    Text("Ttile:${globals.countryList[rand].name}",style: TextStyle(color: Colors.indigo,fontWeight: FontWeight.w500,fontSize: 18),textAlign: TextAlign.center,),
+                    Text("Country:${globals.countryList[rand].name}",style: TextStyle(color: Colors.indigo,fontWeight: FontWeight.w500,fontSize: 18),textAlign: TextAlign.center,),
                     Text("Captial:${globals.countryList[rand].capital}",style: TextStyle(color: Colors.indigo,fontWeight: FontWeight.w500,fontSize: 18),),
                     Text("Continent:${globals.countryList[rand].continent}",style: TextStyle(color: Colors.indigo,fontWeight: FontWeight.w500,fontSize: 18),),
+                  ],
+                ),
+              )
+            );
+          }
+        );
+      }
+    );
+  }
+
+  games(BuildContext context){
+    Random random = new Random();
+    int rand=(0+ random.nextInt(230));
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return StatefulBuilder(
+          builder:(context,setState){
+            return AlertDialog(
+              scrollable: true,
+              actions: <Widget>[
+                RaisedButton(
+                  onPressed:(){                  
+                    setState((){
+                      rand=(0+ random.nextInt(230));
+                    });
+                  },
+                  child:Text("Draw",style: TextStyle(fontSize:20,fontWeight: FontWeight.bold,color: Colors.black)),
+                  color: Colors.teal,
+                  disabledColor: Colors.teal,
+                ),
+                SizedBox(width: 20,),                               
+                FlatButton(
+                  onPressed:(){
+                    Navigator.pop(context);},
+                  child: Text("Done",style: TextStyle(fontSize:18),)),
+              ],
+              backgroundColor: AppColors.primaryWhite,
+              title:Center(child: Text("Random Game",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),)),
+              content: Center(
+                child: Column(
+                  children: <Widget>[
+                    Text("Title:${globals.gameList[rand].name}",style: TextStyle(color: Colors.indigo,fontWeight: FontWeight.w500,fontSize: 18),textAlign: TextAlign.center,),
+                    SizedBox(height:14),
+                    Text("Release year:${globals.gameList[rand].year}",style: TextStyle(color: Colors.purple,fontWeight: FontWeight.w500,fontSize: 18),),
+                    Text("Genre:${globals.gameList[rand].genre}",style: TextStyle(color: Colors.purple,fontWeight: FontWeight.w500,fontSize: 18),),
+                    Text("IGN rating:${globals.gameList[rand].rating}",style: TextStyle(color: Colors.purple,fontWeight: FontWeight.w500,fontSize: 18),),
+                    Text("Platform:${globals.gameList[rand].platform}",style: TextStyle(color: Colors.purple,fontWeight: FontWeight.w500,fontSize: 18),),
+                  ],
+                ),
+              )
+            );
+          }
+        );
+      }
+    );
+  }
+
+ generatePassword(bool _isWithLetters, bool _isWithUppercase,
+    bool _isWithNumbers, bool _isWithSpecial, double _numberCharPassword) {
+
+  //Define the allowed chars to use in the password
+  String _lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
+  String _upperCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  String _numbers = "0123456789";
+  String _special = "@#=+!£\$%&?[](){}";
+
+  //Create the empty string that will contain the allowed chars
+  String _allowedChars = "";
+
+  //Put chars on the allowed ones based on the input values
+  _allowedChars += (_isWithLetters ? _lowerCaseLetters : '');
+  _allowedChars += (_isWithUppercase ? _upperCaseLetters : '');
+  _allowedChars += (_isWithNumbers ? _numbers : '');
+  _allowedChars += (_isWithSpecial ? _special : '');
+
+  int i = 0;
+  String _result = "";
+
+  //Create password
+  while (i < _numberCharPassword.round()) {
+    //Get random int
+    int randomInt = Random.secure().nextInt(_allowedChars.length);
+    //Get random char and append it to the password
+    _result += _allowedChars[randomInt];
+    i++;
+  }
+
+  globals.pass=_result;
+}
+
+  randomPass(BuildContext context){
+    bool letters=true,upperCase=false,numbers=false,special=false;
+    double digit;
+    TextEditingController controller=TextEditingController();
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return StatefulBuilder(
+          builder:(context,setState){
+            return AlertDialog(
+              scrollable: true,
+              actions: <Widget>[
+                RaisedButton(
+                  onPressed:(){                  
+                    setState((){
+                      generatePassword(letters, upperCase, numbers, special, digit);
+                    });
+                  },
+                  child:Text("Draw",style: TextStyle(fontSize:20,fontWeight: FontWeight.bold,)),
+                  color: Colors.teal,
+                  disabledColor: Colors.teal,
+                ),
+                SizedBox(width: 20,),                               
+                FlatButton(
+                  onPressed:(){
+                    Navigator.pop(context);},
+                  child: Text("Done",style: TextStyle(fontSize:18),)),
+              ],
+              backgroundColor: AppColors.primaryWhite,
+              title:Center(child: Text("Random Password",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),)),
+              content: Center(
+                child: Column(
+                  children: <Widget>[
+                    TextField(
+                      textAlign: TextAlign.center,
+                      maxLength: 2,
+                      decoration: InputDecoration(
+                        labelText: 'How many chracters allowed?',
+                        labelStyle: TextStyle(color:Colors.teal,fontWeight:FontWeight.w500),
+                      ),
+                      controller: controller,
+                      keyboardType: TextInputType.number, 
+                      onChanged:(result){
+                        setState((){
+                          digit=double.parse(result);
+                        }) ;
+                       },                         
+                    ),
+                    CheckboxListTile(
+                      value: letters,
+                      title: Text("Allow letters?",style: TextStyle(color:Colors.teal,fontWeight:FontWeight.w500),),
+                      onChanged:(result){
+                        setState((){
+                          letters=result;
+                        });
+                      }),
+                    CheckboxListTile(
+                      value: upperCase,
+                      title: Text("Allow uppercase?",style: TextStyle(color:Colors.teal,fontWeight:FontWeight.w500),),
+                      onChanged:(result){
+                        setState((){
+                          upperCase=result;
+                        });
+                      }),
+                    CheckboxListTile(
+                      value: numbers,
+                      title: Text("Allow numbers?",style: TextStyle(color:Colors.teal,fontWeight:FontWeight.w500),),
+                      onChanged:(result){
+                        setState((){
+                          numbers=result;
+                        });
+                      }),
+                    CheckboxListTile(
+                      value: special,
+                      title: Text("Allow special chracters?",style: TextStyle(color:Colors.teal,fontWeight:FontWeight.w500),),
+                      onChanged:(result){
+                        setState((){
+                          special=result;
+                        });
+                      }),
+                    SizedBox(height:14),
+                    SelectableText(
+                      globals.pass==null?"":globals.pass,
+                        style:TextStyle(
+                          color:Colors.red,
+                          fontWeight:FontWeight.w500,
+                          fontSize:25),
+                          toolbarOptions: ToolbarOptions(copy:true,selectAll:true),
+                        ),
+                  ],
+                ),
+              )
+            );
+          }
+        );
+      }
+    );
+  }
+
+ date(BuildContext context){
+    int rand;
+    String result;
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return StatefulBuilder(
+          builder:(context,setState){
+            return AlertDialog(
+              scrollable: true,
+              actions: <Widget>[
+                RaisedButton(
+                  onPressed:(){               
+                    setState((){
+                      rand=Random().nextInt(6)+1;
+                    });
+                  },
+                  child:Text("Randomize",style: TextStyle(fontSize:20,fontWeight: FontWeight.bold,color: Colors.black)),
+                  color: Colors.teal,
+                  disabledColor: Colors.teal,
+                ),
+                SizedBox(width: 20,),                               
+                FlatButton(
+                  onPressed:(){
+                    Navigator.pop(context);},
+                  child: Text("Done",style: TextStyle(fontSize:18),)),
+              ],
+              backgroundColor: AppColors.primaryWhite,
+              title:Center(child: Text("Yes or No",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),)),
+              content: Center(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      child:Center(child: Text(rand==null?"Ask the app a question and tap on the button below to get the answer":result,style: TextStyle(fontSize:20,fontWeight: FontWeight.w500,color:Colors.pinkAccent),textAlign: TextAlign.center,))
+                    ),                    
                   ],
                 ),
               )

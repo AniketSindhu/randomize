@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:randomize/data/Movies.dart';
-import 'package:randomize/data/name.dart';
+import 'package:randomize/data/games.dart';
 import 'data/cards.dart';
 import 'data/countries.dart';
 import 'data/facts.dart';
@@ -27,22 +27,7 @@ Future<randomCard> fetchCard(String deck_id) async {
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
     // then parse the JSON.
-    print('$deck_id');
     return randomCard.fromJson(json.decode(response.body));
-  } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
-    throw Exception('Failed to load deck');
-  }
-}
-
-Future<Name> fetchName() async {
-  final response = await http.get('https://api.namefake.com/');
-
-  if (response.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
-    return Name.fromJson(json.decode(response.body));
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
@@ -82,6 +67,18 @@ Future<Name> fetchName() async {
   if (response.statusCode == 200) {
       globals.countryList = (json.decode(response.body) as List)
           .map((data) => new Country.fromJson(data))
+          .toList();
+  } else {
+    throw Exception('Failed to load deck');
+    }
+  }
+
+  fetchGame() async {
+
+  final response = await http.get('https://phe0nix.github.io/sample-games-json-list/');
+  if (response.statusCode == 200) {
+      globals.gameList = (json.decode(response.body) as List)
+          .map((data) => new Game.fromJson(data))
           .toList();
   } else {
     throw Exception('Failed to load deck');

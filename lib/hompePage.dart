@@ -43,14 +43,8 @@ class _HomePageState extends State<HomePage> {
         globals.remaining=data1.remaining;
       });
     });
-    fetchName().then((data) {
-      globals.name=data.name;
-      print("${globals.name}");});
-    fetchMovie(true);
-    fetchFact().then((value) {
-      globals.fact=value.fact;
-    });
     fetchCountries();
+    fetchGame();
   }
   @override
   Widget build(BuildContext context) {
