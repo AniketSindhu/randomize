@@ -856,8 +856,8 @@ randomNumber(BuildContext context){
   }
 
  date(BuildContext context){
-    int rand;
-    String result;
+    var from=DateTime.utc(1989, 11, 9);
+    var to=DateTime.now();
     showDialog(
       context: context,
       builder: (BuildContext context){
@@ -869,7 +869,6 @@ randomNumber(BuildContext context){
                 RaisedButton(
                   onPressed:(){               
                     setState((){
-                      rand=Random().nextInt(6)+1;
                     });
                   },
                   child:Text("Randomize",style: TextStyle(fontSize:20,fontWeight: FontWeight.bold,color: Colors.black)),
@@ -883,12 +882,36 @@ randomNumber(BuildContext context){
                   child: Text("Done",style: TextStyle(fontSize:18),)),
               ],
               backgroundColor: AppColors.primaryWhite,
-              title:Center(child: Text("Yes or No",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),)),
+              title:Center(child: Text("Random Date",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),)),
               content: Center(
                 child: Column(
                   children: <Widget>[
-                    Container(
-                      child:Center(child: Text(rand==null?"Ask the app a question and tap on the button below to get the answer":result,style: TextStyle(fontSize:20,fontWeight: FontWeight.w500,color:Colors.pinkAccent),textAlign: TextAlign.center,))
+                    Column(
+                      children: <Widget>[
+                        RaisedButton(
+                          child: Text("From",style:TextStyle(fontWeight:FontWeight.w500),),
+                          color: Colors.teal,
+                          onPressed:()async{
+                            from= await showDatePicker(fieldLabelText: "Select first date",helpText:"Select from date",context: context, initialDate: DateTime.now(), firstDate:DateTime.parse("1980-05-10"), lastDate:DateTime.now(),);
+                            setState((){
+                            });
+                          } 
+                        ),
+                        Text(from==null?"":"From:${from.day.toString()}-${from.month.toString().padLeft(2,'0')}-${from.year.toString().padLeft(2,'0')}",style:TextStyle(fontWeight:FontWeight.w500),),
+                        SizedBox(height:10),
+                        RaisedButton(
+                          child: Text("To",style:TextStyle(fontWeight:FontWeight.w500),),
+                          color: Colors.teal,
+                          onPressed:()async{
+                            to= await showDatePicker(fieldLabelText: "Select second date",helpText:"Select to date",context: context, initialDate: from, firstDate:from, lastDate:DateTime.utc(2030,12,31));
+                            setState((){
+                            });
+                          } 
+                        ),
+                        Text(to==null?"":"To:${to.day.toString()}-${to.month.toString().padLeft(2,'0')}-${to.year.toString().padLeft(2,'0')}",style:TextStyle(fontWeight:FontWeight.w500),),
+                        SizedBox(height:20),
+                        Center(child:Text(from==null?"":"Result:${mockDate(from,to).day.toString()}-${mockDate(from,to).month.toString().padLeft(2,'0')}-${mockDate(from,to).year.toString().padLeft(2,'0')}",style: TextStyle(fontSize:22,fontWeight: FontWeight.w500,color:Colors.deepOrange),textAlign: TextAlign.center,)),
+                      ],
                     ),                    
                   ],
                 ),

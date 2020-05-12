@@ -37,6 +37,8 @@ class _CardsState extends State<Cards> {
         break;
       case "Random password":randomPass(context);
         break;
+      case "Random date":date(context);
+        break;
       default:
     }
   }
