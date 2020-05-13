@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:randomize/config/colors.dart';
 import 'cardName.dart';
+import 'roulette.dart';
 import 'methods.dart';
 
 class Cards extends StatefulWidget {
@@ -39,6 +40,13 @@ class _CardsState extends State<Cards> {
         break;
       case "Random date":date(context);
         break;
+      case "Random location":place(context);
+        break;
+      case "Random letter":letters(context);
+        break;
+      case "Custom roulette":Navigator.push(context,MaterialPageRoute(builder: (context)=>Basic()));
+        break;
+
       default:
     }
   }

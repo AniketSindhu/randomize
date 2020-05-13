@@ -1,20 +1,20 @@
 class Deck {
-  final String deck_id;
-  Deck({this.deck_id});
+  final String deckId;
+  Deck({this.deckId});
 
   factory Deck.fromJson(Map<String, dynamic> json) {
     return Deck(
-      deck_id: json['deck_id'],
+      deckId: json['deck_id'],
     );
   }
 }
-class randomCard {
+class RandomCard {
   final List list;
   int remaining;
-  randomCard({this.list,this.remaining});
+  RandomCard({this.list,this.remaining});
 
-  factory randomCard.fromJson(Map<String, dynamic> json) {
-    return randomCard(
+  factory RandomCard.fromJson(Map<String, dynamic> json) {
+    return RandomCard(
       list: json['cards'],
       remaining:json['remaining']
     );

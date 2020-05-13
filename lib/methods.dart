@@ -1,15 +1,13 @@
-import 'dart:convert';
+import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:randomize/card.dart';
 import 'dart:math';
 import 'config/colors.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'globals.dart'as globals;
-import 'data/Movies.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mock_data/mock_data.dart';
 import 'APIs.dart';
-
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 randomNumber(BuildContext context){
     String result;
     final fromController=TextEditingController();
@@ -325,8 +323,8 @@ randomNumber(BuildContext context){
                       setState(() {
                         globals.remaining=52;
                         fetchDeck().then((data) {
-                        globals.deck_id=data.deck_id;
-                        fetchCard(globals.deck_id).then((data1) {
+                        globals.deckId=data.deckId;
+                        fetchCard(globals.deckId).then((data1) {
                           globals.image=data1.list[0]['image'];
                           globals.remaining=data1.remaining;
                           });
@@ -342,7 +340,7 @@ randomNumber(BuildContext context){
                   padding: const EdgeInsets.all(3.0),
                   child: RaisedButton(
                     onPressed:(){
-                      fetchCard(globals.deck_id).then((data1) {
+                      fetchCard(globals.deckId).then((data1) {
                         globals.image=data1.list[0]['image'];
                         globals.remaining=data1.remaining;
                       });
@@ -567,10 +565,7 @@ randomNumber(BuildContext context){
               scrollable: true,
               actions: <Widget>[
                 RaisedButton(
-                  onPressed:(){
-                    fetchFact().then((value) {
-                      globals.fact=value.fact;
-                    });                 
+                  onPressed:(){              
                     setState((){
                       rand=Random().nextInt(6)+1;
                       switch (rand) {
@@ -922,4 +917,112 @@ randomNumber(BuildContext context){
       }
     );
   }
+ place(BuildContext context){
+   Completer<GoogleMapController> _controller = Completer();
+   final random = Random();
+      final Set<Marker> _markers = {};
+  double randomLat = -90 + random.nextDouble() * 90 * 2;
+  double randomLng = -180 + random.nextDouble() * 180 * 2;
+   final CameraPosition initial = CameraPosition(
+    target: LatLng(randomLat, randomLng),
+    zoom: 3,
+  );
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return StatefulBuilder(
+          builder:(context,setState){
+            return AlertDialog(
+              scrollable: true,
+              actions: <Widget>[
+                RaisedButton(
+                  onPressed:()async{
+                    randomLat = -90 + random.nextDouble() * 90 * 2;
+                    randomLng = -180 + random.nextDouble() * 180 * 2;    
+                    final GoogleMapController controller = await _controller.future;
+                    controller.animateCamera(
+                      CameraUpdate.newCameraPosition(
+                        CameraPosition(
+                          tilt:10,
+                          target: LatLng(randomLat, randomLng),
+                          zoom: 3,
+                        )));          
+                    setState((){
+                      _markers.add(Marker(
+                        markerId: MarkerId(("1").toString()),
+                        position:LatLng(randomLat, randomLng) ,
+                        icon: BitmapDescriptor.defaultMarker,
+                      ));
+                    });
+                  },
+                  child:Text("Randomize",style: TextStyle(fontSize:20,fontWeight: FontWeight.bold,color: Colors.black)),
+                  color: Colors.teal,
+                  disabledColor: Colors.teal,
+                ),
+                SizedBox(width: 20,),                               
+                FlatButton(
+                  onPressed:(){
+                    Navigator.pop(context);},
+                  child: Text("Done",style: TextStyle(fontSize:18),)),
+              ],
+              backgroundColor: AppColors.primaryWhite,
+              title:Center(child: Text("Random Location",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),)),
+              content: Center(
+                child:Container(
+                  width: MediaQuery.of(context).size.width,
+                  height:MediaQuery.of(context).size.width/1.5 ,
+                  padding: EdgeInsets.all(15),
+                  child:GoogleMap(
+                    mapType: MapType.normal,
+                    initialCameraPosition: initial,
+                    markers: _markers,
+                    onMapCreated: (GoogleMapController controller) {
+                      _controller.complete(controller);
+                    },
+                  ), 
+                )
+              )
+            );
+          }
+        );
+      }
+    );
+  }
 
+ letters(BuildContext context){
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return StatefulBuilder(
+          builder:(context,setState){
+            return AlertDialog(
+              scrollable: true,
+              actions: <Widget>[
+                RaisedButton(
+                  onPressed:(){                
+                    setState((){
+                    });
+                  },
+                  child:Text("Randomize",style: TextStyle(fontSize:20,fontWeight: FontWeight.bold,color: Colors.black)),
+                  color: Colors.teal,
+                  disabledColor: Colors.teal,
+                ),
+                SizedBox(width: 20,),                               
+                FlatButton(
+                  onPressed:(){
+                    Navigator.pop(context);},
+                  child: Text("Done",style: TextStyle(fontSize:18),)),
+              ],
+              backgroundColor: AppColors.primaryWhite,
+              title:Center(child: Text("Random Letter",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),)),
+              content: Center(
+                child: Container(
+                  child:Center(child: Text(mockString(1,'aA').toUpperCase(),style: TextStyle(fontSize:25,fontWeight: FontWeight.w500,color:Colors.pinkAccent),textAlign: TextAlign.center,))
+                ),
+              )
+            );
+          }
+        );
+      }
+    );
+  }  

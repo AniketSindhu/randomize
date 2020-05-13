@@ -33,7 +33,8 @@ dependencies:
   auto_size_text: ^2.1.0
   flutter_svg: ^0.17.4
   mock_data: ^1.2.6
-
+  google_maps_flutter: ^0.5.27+3
+  flutter_spinning_wheel : ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -51,6 +52,7 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/
     - assets/coins/
 
   fonts:

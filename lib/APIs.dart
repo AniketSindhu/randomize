@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:randomize/data/Movies.dart';
@@ -21,13 +20,13 @@ Future<Deck> fetchDeck() async {
     throw Exception('Failed to load deck');
   }
 }
-Future<randomCard> fetchCard(String deck_id) async {
-  final response = await http.get('https://deckofcardsapi.com/api/deck/$deck_id/draw/?count=1');
+Future<RandomCard> fetchCard(String deckId) async {
+  final response = await http.get('https://deckofcardsapi.com/api/deck/$deckId/draw/?count=1');
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
     // then parse the JSON.
-    return randomCard.fromJson(json.decode(response.body));
+    return RandomCard.fromJson(json.decode(response.body));
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.

@@ -2,7 +2,7 @@ import 'package:randomize/data/countries.dart';
 import 'data/Movies.dart';
 import 'data/games.dart';
  
-  String deck_id;
+  String deckId;
   int remaining=52;
   List list;
   String image;

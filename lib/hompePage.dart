@@ -36,13 +36,15 @@ class _HomePageState extends State<HomePage> {
 
   void initState(){
     super.initState();
+    quotes=fetchQuotes();
     fetchDeck().then((data) {
-      globals.deck_id=data.deck_id;
-      fetchCard(globals.deck_id).then((data1) {
+      globals.deckId=data.deckId;
+      fetchCard(globals.deckId).then((data1) {
         globals.image=data1.list[0]['image'];
         globals.remaining=data1.remaining;
       });
     });
+    fetchMovie(true);
     fetchCountries();
     fetchGame();
   }
@@ -76,7 +78,7 @@ class _HomePageState extends State<HomePage> {
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: FutureBuilder<Quotes>(
-                          future: fetchQuotes(),
+                          future: quotes,
                           builder: (context, snapshot) {
                             if(snapshot.hasData){
                             return AutoSizeText("${snapshot.data.quoteText}",style:TextStyle(fontSize:21,fontWeight: FontWeight.w500,),textAlign: TextAlign.start);
