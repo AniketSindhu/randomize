@@ -44,7 +44,7 @@ class _CardsState extends State<Cards> {
         break;
       case "Random letter":letters(context);
         break;
-      case "Custom roulette":Navigator.push(context,MaterialPageRoute(builder: (context)=>Basic()));
+      case "Custom roulette":Navigator.push(context,MaterialPageRoute(builder: (context)=>Ask()));
         break;
 
       default:

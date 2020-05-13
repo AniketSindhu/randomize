@@ -45,6 +45,9 @@ class _HomePageState extends State<HomePage> {
       });
     });
     fetchMovie(true);
+    fetchFact().then((value) {
+      globals.fact=value.fact;
+    });
     fetchCountries();
     fetchGame();
   }
