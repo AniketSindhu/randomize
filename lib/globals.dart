@@ -3,6 +3,7 @@ import 'data/Movies.dart';
 import 'data/games.dart';
  
   String deckId;
+  int count=1;
   int remaining=52;
   List list;
   String image;

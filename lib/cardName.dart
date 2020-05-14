@@ -16,6 +16,7 @@ import 'package:flutter_icons/flutter_icons.dart';
     const Choice(title: 'Random card', icon: Icon(FlutterIcons.cards_playing_outline_mco,color: Colors.teal,size: 60,)),
     const Choice(title: 'Yes or no', icon: Icon(FlutterIcons.thumbs_up_faw5s,color: Colors.teal,size: 60,)),
     const Choice(title: 'Random password', icon: Icon(FlutterIcons.key_faw5s,color: Colors.teal,size: 60,)),
+    const Choice(title: 'Random color', icon:Icon(FlutterIcons.palette_faw5s,color: Colors.teal,size: 60,) ),
     const Choice(title: 'Random letter', icon: Icon(FlutterIcons.font_faw5s,color: Colors.teal,size: 60,)),
     const Choice(title: 'Random date', icon: Icon(FlutterIcons.calendar_day_faw5s,color: Colors.teal,size: 60,)),
     const Choice(title: 'Custom roulette', icon: Icon(FlutterIcons.spinner_faw5s,color: Colors.teal,size: 60,)),

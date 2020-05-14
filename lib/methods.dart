@@ -1025,4 +1025,59 @@ randomNumber(BuildContext context){
         );
       }
     );
-  }  
+  }
+
+color(BuildContext context){
+  String result=generateRandomHexColor();
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return StatefulBuilder(
+          builder:(context,setState){
+            return AlertDialog(
+              scrollable: true,
+              actions: <Widget>[
+                RaisedButton(
+                  onPressed:(){              
+                    setState((){
+                      result=generateRandomHexColor();
+                      }
+                    );
+                  },
+                  child:Text("Randomize",style: TextStyle(fontSize:20,fontWeight: FontWeight.bold,color: Colors.black)),
+                  color: Colors.teal,
+                  disabledColor: Colors.teal,
+                ),
+                SizedBox(width: 20,),                               
+                FlatButton(
+                  onPressed:(){
+                    Navigator.pop(context);},
+                  child: Text("Done",style: TextStyle(fontSize:18),)),
+              ],
+              backgroundColor: AppColors.primaryWhite,
+              title:Center(child: Text("Random Color",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),)),
+              content: Center(
+                child: Container(
+                  width: MediaQuery.of(context).size.width/1.3,
+                  height:MediaQuery.of(context).size.width/1.3,
+                  color: Color(int.parse(result.replaceAll('#','0xFF' ))),
+                  child: Center(child: SelectableText(result,
+                    toolbarOptions: ToolbarOptions(copy:true,selectAll:true),
+                    style: TextStyle(color:Colors.black,fontSize: 20,fontWeight: FontWeight.w500),)),
+                ),
+              )
+            );
+          }
+        );
+      }
+    );
+  } 
+
+  String generateRandomHexColor(){
+    Random random = new Random();
+    int length = 6;
+    String chars = '0123456789ABCDEF';
+    String hex = '#';
+    while(length-- > 0) hex += chars[(random.nextInt(16)) | 0];
+    return hex;
+} 

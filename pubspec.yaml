@@ -36,7 +36,8 @@ dependencies:
   google_maps_flutter: ^0.5.27+3
   flutter_spinning_wheel : ^1.1.0
   flare_splash_screen: ^3.0.1
-
+  firebase_admob: ^0.9.3+2
+  flutter_launcher_icons: "^0.7.0"
 dev_dependencies:
   flutter_test:
     sdk: flutter

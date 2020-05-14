@@ -1,9 +1,10 @@
-
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:randomize/config/colors.dart';
 import 'cardName.dart';
 import 'roulette.dart';
 import 'methods.dart';
+import 'globals.dart'as globals;
 
 class Cards extends StatefulWidget {
   const Cards({Key key, this.choice}) : super(key: key);
@@ -13,6 +14,23 @@ class Cards extends StatefulWidget {
 }
 
 class _CardsState extends State<Cards> {
+ 
+  
+  InterstitialAd _interstitialAd;
+  static const MobileAdTargetingInfo targetingInfo=MobileAdTargetingInfo(
+  testDevices:<String>[],
+  nonPersonalizedAds: true,
+  );
+
+  InterstitialAd CreateInterstitialAd(){
+    return InterstitialAd(
+      adUnitId: 'ca-app-pub-8295782880270632/6252909088',
+      targetingInfo: targetingInfo,
+      listener: (MobileAdEvent event){
+          print("InterstitialAd $event");
+        }
+      );
+    }
 
   detectTap(Choice choice,BuildContext context){
     switch (choice.title) {
@@ -46,15 +64,32 @@ class _CardsState extends State<Cards> {
         break;
       case "Custom roulette":Navigator.push(context,MaterialPageRoute(builder: (context)=>Ask()));
         break;
+      case "Random color":color(context);
+        break;
 
       default:
     }
   }
-
+  void initState(){
+    super.initState();
+     FirebaseAdMob.instance.initialize(appId: 'ca-app-pub-8295782880270632~5809770541');
+     _interstitialAd=CreateInterstitialAd()..load();
+  }
+  @override
+  void dispose() {
+    super.dispose();
+    _interstitialAd.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: ()=>{detectTap(widget.choice,context)},
+      onTap: (){
+        globals.count++;
+        print(globals.count);
+        detectTap(widget.choice,context);
+        if(globals.count%3==0)
+        {CreateInterstitialAd()..load()..show();}
+      },
       child: Container(
         decoration: BoxDecoration(boxShadow: AppColors.neumorpShadow),
         child: Card(

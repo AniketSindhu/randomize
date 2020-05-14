@@ -9,7 +9,7 @@ import 'dart:convert';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'globals.dart'as globals;
 import 'APIs.dart';
-
+import 'package:firebase_admob/firebase_admob.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -19,7 +19,25 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> { 
   
   Future<Quotes> quotes;
-
+  
+  BannerAd _bannerAd;
+  
+  static const MobileAdTargetingInfo targetingInfo=MobileAdTargetingInfo(
+  testDevices:<String>[],
+  nonPersonalizedAds: true,
+  );
+  
+  BannerAd CreateBannerAd(){
+    return BannerAd(
+      adUnitId: 'ca-app-pub-8295782880270632/6775367851',
+      size: AdSize.fullBanner,
+      targetingInfo: targetingInfo,
+      listener: (MobileAdEvent event){
+        print("banner ad $event");
+      }
+    );
+  }
+  
   Future<Quotes> fetchQuotes() async {
   final response = await http.get('https://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json');
 
@@ -36,7 +54,9 @@ class _HomePageState extends State<HomePage> {
 
   void initState(){
     super.initState();
+    
     quotes=fetchQuotes();
+    
     fetchDeck().then((data) {
       globals.deckId=data.deckId;
       fetchCard(globals.deckId).then((data1) {
@@ -44,6 +64,10 @@ class _HomePageState extends State<HomePage> {
         globals.remaining=data1.remaining;
       });
     });
+    
+    FirebaseAdMob.instance.initialize(appId: 'ca-app-pub-8295782880270632~5809770541');
+    _bannerAd=CreateBannerAd()..load()..show();
+
     fetchMovie(true);
     fetchFact().then((value) {
       globals.fact=value.fact;
@@ -51,61 +75,76 @@ class _HomePageState extends State<HomePage> {
     fetchCountries();
     fetchGame();
   }
+@override
+  void dispose(){
+    _bannerAd..dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     var height=SizeConfig.getHeight(context);
     var width=SizeConfig.getWidth(context);
-    return Scaffold(
-      body:CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            backgroundColor: AppColors.primaryWhite,
-            pinned: true,
-            floating: true,
-            expandedHeight: height/3.5,
-            title: Text("Randomize",style:TextStyle(fontWeight:FontWeight.bold,fontSize:30,color: Colors.black)),
-            centerTitle: true,
-            flexibleSpace: FlexibleSpaceBar(
-              background: Container(
-                alignment: Alignment.center,
-                margin: EdgeInsets.only(left:width/20,right:width/20,top: height/9.6),
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(top:14),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text("A random quote:",style:TextStyle(fontSize:18))),
-                    ),
-                    Expanded(
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: FutureBuilder<Quotes>(
-                          future: quotes,
-                          builder: (context, snapshot) {
-                            if(snapshot.hasData){
-                            return AutoSizeText("${snapshot.data.quoteText}",style:TextStyle(fontSize:21,fontWeight: FontWeight.w500,),textAlign: TextAlign.start);
-                            }
-                            else if(snapshot.hasError){
-                            return AutoSizeText("Everything is good if you have good internet",style:TextStyle(fontSize:21,fontWeight: FontWeight.w500,),textAlign: TextAlign.start);
-                            }
-                            return Center(child: CircularProgressIndicator());
-                          }
-                        )),
+    return Column(
+      children: <Widget>[
+        Expanded(
+          child: Scaffold(
+            body:CustomScrollView(
+              slivers: <Widget>[
+                SliverAppBar(
+                  backgroundColor: AppColors.primaryWhite,
+                  pinned: true,
+                  floating: true,
+                  expandedHeight: height/3.5,
+                  title: Text("Randomize",style:TextStyle(fontWeight:FontWeight.bold,fontSize:30,color: Colors.black)),
+                  centerTitle: true,
+                  flexibleSpace: FlexibleSpaceBar(
+                    background: Container(
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.only(left:width/20,right:width/20,top: height/9.6),
+                      child: Column(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(top:14),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text("A random quote:",style:TextStyle(fontSize:18))),
+                          ),
+                          Expanded(
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: FutureBuilder<Quotes>(
+                                future: quotes,
+                                builder: (context, snapshot) {
+                                  if(snapshot.hasData){
+                                  return AutoSizeText("${snapshot.data.quoteText}",style:TextStyle(fontSize:21,fontWeight: FontWeight.w500,),textAlign: TextAlign.start);
+                                  }
+                                  else if(snapshot.hasError){
+                                  return AutoSizeText("Everything is good if you have good internet",style:TextStyle(fontSize:21,fontWeight: FontWeight.w500,),textAlign: TextAlign.start);
+                                  }
+                                  return Center(child: CircularProgressIndicator());
+                                }
+                              )),
+                          )
+                        ],
+                      ),
                     )
-                  ],
+                  )
                 ),
+                SliverGrid.count(
+                  crossAxisCount: 2,
+                  children: List.generate(choices.length,(index){
+                  return Cards(choice: choices[index]);
+                }
               )
             )
-          ),
-          SliverGrid.count(
-            crossAxisCount: 2,
-            children: List.generate(choices.length,(index){
-            return Cards(choice: choices[index]);
-          }
-        )
-      )
-    ]
+          ]
   ),
-  backgroundColor: AppColors.primaryWhite,);
+  backgroundColor: AppColors.primaryWhite,),
+        ),
+        Container(
+          height:60,
+          color:Colors.indigo[50]
+        )
+      ],
+    );
 }}
