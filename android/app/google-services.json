@@ -8,17 +8,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:181308358761:android:25c68aaa456f217749e2f8",
+        "mobilesdk_app_id": "1:181308358761:android:de447928388402e049e2f8",
         "android_client_info": {
-          "package_name": "com.example.randomize"
+          "package_name": "com.aniket.randomize"
         }
       },
       "oauth_client": [
         {
-          "client_id": "181308358761-i548te7asn7r7vvgklnamms64ol4lhi8.apps.googleusercontent.com",
+          "client_id": "181308358761-srocmhs7ev3cp1a1bmisb6klj8i1pv8d.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.randomize",
+            "package_name": "com.aniket.randomize",
             "certificate_hash": "3e757356bc630beb82922b8f55eca683efbdc53c"
           }
         },

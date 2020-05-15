@@ -672,7 +672,7 @@ randomNumber(BuildContext context){
 
   games(BuildContext context){
     Random random = new Random();
-    int rand=(0+ random.nextInt(230));
+    int rand=(0+ random.nextInt(220));
     showDialog(
       context: context,
       builder: (BuildContext context){
@@ -684,7 +684,7 @@ randomNumber(BuildContext context){
                 RaisedButton(
                   onPressed:(){                  
                     setState((){
-                      rand=(0+ random.nextInt(230));
+                      rand=(0+ random.nextInt(220));
                     });
                   },
                   child:Text("Draw",style: TextStyle(fontSize:20,fontWeight: FontWeight.bold,color: Colors.black)),
