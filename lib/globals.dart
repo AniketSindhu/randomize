@@ -1,4 +1,5 @@
 import 'package:randomize/data/countries.dart';
+import 'package:randomize/data/elements.dart';
 import 'data/Movies.dart';
 import 'data/games.dart';
  
@@ -14,4 +15,5 @@ import 'data/games.dart';
   String fact;
   List<Country> countryList=List();
   List<Game> gameList=List();
+  List<Elements> elementList=List();
   String pass;

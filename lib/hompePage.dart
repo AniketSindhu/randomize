@@ -10,6 +10,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'globals.dart'as globals;
 import 'APIs.dart';
 import 'package:firebase_admob/firebase_admob.dart';
+import 'package:flutter_share/flutter_share.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -29,7 +31,7 @@ class _HomePageState extends State<HomePage> {
   
   BannerAd CreateBannerAd(){
     return BannerAd(
-      adUnitId: 'ca-app-pub-8295782880270632/6775367851',
+      adUnitId: BannerAd.testAdUnitId,
       size: AdSize.fullBanner,
       targetingInfo: targetingInfo,
       listener: (MobileAdEvent event){
@@ -51,9 +53,19 @@ class _HomePageState extends State<HomePage> {
     throw Exception('Failed to load album');
   }
 }
+  Future<void> share() async {
+    await FlutterShare.share(
+      title: 'Hey,I found out a great app!',
+      text: 'Use this app to genrate random numbers,color,countries,movies & many more.',
+      linkUrl: 'https://play.google.com/store/apps/details?id=com.aniket.randomize',
+      chooserTitle: 'Hey,I found out a great app!'
+    );
+  }
 
   void initState(){
     super.initState();
+    FirebaseAdMob.instance.initialize(appId: 'ca-app-pub-8295782880270632~5809770541');
+    _bannerAd=CreateBannerAd()..load()..show();
     
     quotes=fetchQuotes();
     
@@ -65,15 +77,13 @@ class _HomePageState extends State<HomePage> {
       });
     });
     
-    FirebaseAdMob.instance.initialize(appId: 'ca-app-pub-8295782880270632~5809770541');
-    _bannerAd=CreateBannerAd()..load()..show();
-
     fetchMovie(true);
     fetchFact().then((value) {
       globals.fact=value.fact;
     });
     fetchCountries();
     fetchGame();
+    fetchElement();
   }
 @override
   void dispose(){
@@ -88,6 +98,56 @@ class _HomePageState extends State<HomePage> {
       children: <Widget>[
         Expanded(
           child: Scaffold(
+            drawer: Drawer(
+              child: Container(
+                color: AppColors.primaryWhite,
+                child: ListView(
+                   padding: EdgeInsets.only(top:20),
+                   children: <Widget>[
+                     DrawerHeader(
+                       decoration: BoxDecoration(
+                         color: Colors.teal,
+                         image: DecorationImage(
+                           image: AssetImage("assets/mask.jpg"),
+                            fit: BoxFit.cover),
+                       ),
+                       child: Align(alignment:Alignment.bottomLeft,child: Text('Randomize',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),)),
+                     ),
+                     ListTile(
+                       title: Text('Share with your friends',style: TextStyle(fontSize:20,color: Colors.black),),
+                       leading: Icon(Icons.share,size: 40,color: Colors.teal,),
+                       onTap: () {
+                         share();
+                        },
+                      ),
+                      Divider(height:3,color: Colors.black,),
+                      ListTile(
+                      title: Text('Rate the app',style: TextStyle(fontSize:20,color: Colors.black),),
+                      leading: Icon(Icons.star,size: 40,color: Colors.teal,),
+                      onTap: () {
+                        launch('https://play.google.com/store/apps/details?id=com.aniket.randomize');
+                      },
+                     ),
+                     Divider(height:3,color: Colors.black,),
+                     ListTile(
+                      title: Text('About the developer',style: TextStyle(fontSize:20,color: Colors.black),),
+                      leading: Icon(Icons.developer_mode,size: 40,color: Colors.teal,),
+                      onTap: () {
+                         launch('https://github.com/AniketSindhu');
+                      },
+                     ),
+                      Divider(height:3,color: Colors.black,),
+                      ListTile(
+                      title: Text('Try Randomize',style: TextStyle(fontSize:20,color: Colors.black),),
+                      leading: Icon(Icons.play_arrow,size: 40,color: Colors.teal,),
+                       onTap: () {
+                          launch('https://play.google.com/store/apps/details?id=com.aniket.randomize');
+                       },
+                      )
+                    ],
+                  ),
+              ),
+             ),
             body:CustomScrollView(
               slivers: <Widget>[
                 SliverAppBar(

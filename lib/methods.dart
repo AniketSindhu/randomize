@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'dart:math';
 import 'config/colors.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -1081,3 +1082,55 @@ color(BuildContext context){
     while(length-- > 0) hex += chars[(random.nextInt(16)) | 0];
     return hex;
 } 
+
+  elements(BuildContext context){
+    Random random = new Random();
+    int rand=(0+ random.nextInt(119));
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return StatefulBuilder(
+          builder:(context,setState){
+            return AlertDialog(
+              scrollable: true,
+              actions: <Widget>[
+                RaisedButton(
+                  onPressed:(){                  
+                    setState((){
+                      rand=(0+ random.nextInt(119));
+                    });
+                  },
+                  child:Text("Randomize",style: TextStyle(fontSize:20,fontWeight: FontWeight.bold,color: Colors.white)),
+                  color: Colors.teal,
+                  disabledColor: Colors.teal,
+                ),
+                SizedBox(width: 20,),                               
+                FlatButton(
+                  onPressed:(){
+                    Navigator.pop(context);},
+                  child: Text("Done",style: TextStyle(fontSize:18),)),
+              ],
+              backgroundColor: AppColors.primaryWhite,
+              title:Center(child: Text("Random Element",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),)),
+              content: Center(
+                child: Column(
+                  children: <Widget>[
+                    Text("Name:${globals.elementList[rand].name}(${globals.elementList[rand].symbol})",style: TextStyle(color: Colors.indigo,fontWeight: FontWeight.w500,fontSize: 18),textAlign: TextAlign.center,),
+                    SizedBox(height:14),
+                    Text("Atomic No:${globals.elementList[rand].number}",style: TextStyle(color: Colors.purple,fontWeight: FontWeight.w500,fontSize: 18),),
+                    Text("Atomic mass:${globals.elementList[rand].mass}",style: TextStyle(color: Colors.purple,fontWeight: FontWeight.w500,fontSize: 18),),
+                    Text("Electronic configuration:${globals.elementList[rand].config}",style: TextStyle(color: Colors.purple,fontWeight: FontWeight.w500,fontSize: 18),),
+                    OutlineButton(
+                      onPressed: ()=>launch(globals.elementList[rand].source),
+                      child: Text("Wikipedia"),
+                      color: Colors.teal
+                    )
+                  ],
+                ),
+              )
+            );
+          }
+        );
+      }
+    );
+  }

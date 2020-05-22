@@ -66,7 +66,8 @@ class _CardsState extends State<Cards> {
         break;
       case "Random color":color(context);
         break;
-
+      case "Random element":elements(context);
+        break;
       default:
     }
   }

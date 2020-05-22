@@ -25,5 +25,6 @@ import 'package:flutter_icons/flutter_icons.dart';
     const Choice(title: 'Random location', icon: Icon(FlutterIcons.location_arrow_faw5s,color: Colors.teal,size: 60,)),
     const Choice(title: 'Random movie', icon: Icon(FlutterIcons.film_faw5s,color: Colors.teal,size: 60,)),
     const Choice(title: 'Random country', icon: Icon(FlutterIcons.globe_faw5s,color: Colors.teal,size: 60,)),
-    const Choice(title: 'Random game', icon:Icon(FlutterIcons.gamepad_faw5s,color: Colors.teal,size: 60,) ),
+    const Choice(title: 'Random game', icon:Icon(FlutterIcons.gamepad_faw5s,color: Colors.teal,size: 60,)),
+    const Choice(title: 'Random element', icon:Icon(FlutterIcons.atom_faw5s,color: Colors.teal,size: 60,) ),
   ];

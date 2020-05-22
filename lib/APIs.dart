@@ -4,6 +4,7 @@ import 'package:randomize/data/Movies.dart';
 import 'package:randomize/data/games.dart';
 import 'data/cards.dart';
 import 'data/countries.dart';
+import 'data/elements.dart';
 import 'data/facts.dart';
 import 'globals.dart'as globals;
 
@@ -78,6 +79,18 @@ Future<RandomCard> fetchCard(String deckId) async {
   if (response.statusCode == 200) {
       globals.gameList = (json.decode(response.body) as List)
           .map((data) => new Game.fromJson(data))
+          .toList();
+  } else {
+    throw Exception('Failed to load deck');
+    }
+  }
+
+  fetchElement() async {
+
+  final response = await http.get('https://raw.githubusercontent.com/Bowserinator/Periodic-Table-JSON/master/PeriodicTableJSON.json');
+  if (response.statusCode == 200) {
+      globals.elementList = (json.decode(response.body) as List)
+          .map((data) => new Elements.fromJson(data))
           .toList();
   } else {
     throw Exception('Failed to load deck');
