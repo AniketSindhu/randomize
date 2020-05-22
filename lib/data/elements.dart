@@ -10,8 +10,8 @@ factory Elements.fromJson(Map<String, dynamic> json) {
       config: json['electron_configuration'],
       symbol:json['symbol'],
       source:json['source'],
-      number:json['number'],
-      mass:json['atomic_mass']
+      number:json['number'].toInt(),
+      mass:json['atomic_mass'].toDouble()
     );
   }
 }

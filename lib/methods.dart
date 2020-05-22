@@ -494,7 +494,7 @@ randomNumber(BuildContext context){
                         fit: BoxFit.fill,
                         image:NetworkImage(globals.movieList[rand].url))),                    
                     SizedBox(height:10),
-                    Text("Ttile:${globals.movieList[rand].title}",style: TextStyle(color: Colors.redAccent,fontWeight: FontWeight.w500,fontSize: 18),textAlign: TextAlign.center,),
+                    Text("Title:${globals.movieList[rand].title}",style: TextStyle(color: Colors.redAccent,fontWeight: FontWeight.w500,fontSize: 18),textAlign: TextAlign.center,),
                     Text("Year:${globals.movieList[rand].year}",style: TextStyle(color: Colors.redAccent,fontWeight: FontWeight.w500,fontSize: 18),),
                     Text("IMDb rating:${globals.movieList[rand].rating}",style: TextStyle(color: Colors.redAccent,fontWeight: FontWeight.w500,fontSize: 18),)
                   ],
@@ -788,6 +788,8 @@ randomNumber(BuildContext context){
                     TextField(
                       textAlign: TextAlign.center,
                       maxLength: 2,
+                      
+                      autofocus: true,
                       decoration: InputDecoration(
                         labelText: 'How many chracters allowed?',
                         labelStyle: TextStyle(color:Colors.teal,fontWeight:FontWeight.w500),
@@ -1115,15 +1117,15 @@ color(BuildContext context){
               content: Center(
                 child: Column(
                   children: <Widget>[
-                    Text("Name:${globals.elementList[rand].name}(${globals.elementList[rand].symbol})",style: TextStyle(color: Colors.indigo,fontWeight: FontWeight.w500,fontSize: 18),textAlign: TextAlign.center,),
-                    SizedBox(height:14),
-                    Text("Atomic No:${globals.elementList[rand].number}",style: TextStyle(color: Colors.purple,fontWeight: FontWeight.w500,fontSize: 18),),
-                    Text("Atomic mass:${globals.elementList[rand].mass}",style: TextStyle(color: Colors.purple,fontWeight: FontWeight.w500,fontSize: 18),),
-                    Text("Electronic configuration:${globals.elementList[rand].config}",style: TextStyle(color: Colors.purple,fontWeight: FontWeight.w500,fontSize: 18),),
+                    Text("Name:${globals.elementList[rand].name}(${globals.elementList[rand].symbol})",style: TextStyle(color: Colors.indigo,fontWeight: FontWeight.w500,fontSize: 22),textAlign: TextAlign.center,),
+                    Text("Atomic No:${globals.elementList[rand].number}",style: TextStyle(color: Colors.redAccent,fontWeight: FontWeight.w500,fontSize: 18),),
+                    Text("Atomic mass:${globals.elementList[rand].mass}",style: TextStyle(color: Colors.redAccent,fontWeight: FontWeight.w500,fontSize: 18),),
+                    Text("Electronic configuration:${globals.elementList[rand].config}",style: TextStyle(color: Colors.redAccent,fontWeight: FontWeight.w500,fontSize: 18),textAlign: TextAlign.center,),
+                    SizedBox(height:10),
                     OutlineButton(
                       onPressed: ()=>launch(globals.elementList[rand].source),
-                      child: Text("Wikipedia"),
-                      color: Colors.teal
+                      child: Text("Wikipedia",style: TextStyle(fontSize: 18),),
+                      borderSide: BorderSide(color: Colors.teal,width: 3.0),
                     )
                   ],
                 ),

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:randomize/data/Movies.dart';
 import 'package:randomize/data/games.dart';
@@ -89,9 +90,10 @@ Future<RandomCard> fetchCard(String deckId) async {
 
   final response = await http.get('https://raw.githubusercontent.com/Bowserinator/Periodic-Table-JSON/master/PeriodicTableJSON.json');
   if (response.statusCode == 200) {
-      globals.elementList = (json.decode(response.body) as List)
-          .map((data) => new Elements.fromJson(data))
-          .toList();
+        var data = json.decode(response.body);
+        var rest = data["elements"] as List;
+        globals.elementList = rest.map<Elements>((json) => Elements.fromJson(json)).toList();
+
   } else {
     throw Exception('Failed to load deck');
     }

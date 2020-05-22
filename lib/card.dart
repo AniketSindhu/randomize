@@ -24,7 +24,7 @@ class _CardsState extends State<Cards> {
 
   InterstitialAd CreateInterstitialAd(){
     return InterstitialAd(
-      adUnitId: 'ca-app-pub-8295782880270632/6252909088',
+      adUnitId: InterstitialAd.testAdUnitId,
       targetingInfo: targetingInfo,
       listener: (MobileAdEvent event){
           print("InterstitialAd $event");

@@ -68,7 +68,6 @@ class _HomePageState extends State<HomePage> {
     _bannerAd=CreateBannerAd()..load()..show();
     
     quotes=fetchQuotes();
-    
     fetchDeck().then((data) {
       globals.deckId=data.deckId;
       fetchCard(globals.deckId).then((data1) {
@@ -99,6 +98,7 @@ class _HomePageState extends State<HomePage> {
         Expanded(
           child: Scaffold(
             drawer: Drawer(
+              
               child: Container(
                 color: AppColors.primaryWhite,
                 child: ListView(
