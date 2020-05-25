@@ -1136,3 +1136,37 @@ color(BuildContext context){
       }
     );
   }
+
+ wikipedia(BuildContext context){
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return StatefulBuilder(
+          builder:(context,setState){
+            return AlertDialog(
+              scrollable: true,
+              actions: <Widget>[
+                SizedBox(width: 20,),                               
+                FlatButton(
+                  onPressed:(){
+                    Navigator.pop(context);},
+                  child: Text("Done",style: TextStyle(fontSize:18),)),
+              ],
+              backgroundColor: AppColors.primaryWhite,
+              title:Center(child: Text("Random Letter",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),)),
+              content: Center(
+                child: Container(
+                  child:RaisedButton(
+                    onPressed:(){launch('https://en.wikipedia.org/wiki/Special:Random');},
+                    child:Text("Randomize wikipedia",style: TextStyle(fontSize:20,fontWeight: FontWeight.bold,color: Colors.white)),
+                    color: Colors.teal,
+                    disabledColor: Colors.teal,
+                  ),
+                ),
+              )
+            );
+          }
+        );
+      }
+    );
+  }
