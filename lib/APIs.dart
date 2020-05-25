@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:randomize/data/Movies.dart';
+import 'package:randomize/data/dog.dart';
 import 'package:randomize/data/games.dart';
 import 'data/cards.dart';
 import 'data/countries.dart';
@@ -94,6 +95,19 @@ Future<RandomCard> fetchCard(String deckId) async {
         var rest = data["elements"] as List;
         globals.elementList = rest.map<Elements>((json) => Elements.fromJson(json)).toList();
 
+  } else {
+    throw Exception('Failed to load deck');
+    }
+  }
+
+fetchDog() async {
+
+  final response = await http.get('https://api.thedogapi.com/v1/images/search?size=med&mime_types=jpg&format=json&has_breeds=true&order=RANDOM&page=0&limit=1');
+  if (response.statusCode == 200) {
+    print('done');
+        var data = json.decode(response.body);
+        var rest = data["breeds"] as List;
+        globals.dogList = rest.map<Dogs>((json) => Dogs.fromJson(json)).toList();
   } else {
     throw Exception('Failed to load deck');
     }

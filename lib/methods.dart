@@ -1153,7 +1153,7 @@ color(BuildContext context){
                   child: Text("Done",style: TextStyle(fontSize:18),)),
               ],
               backgroundColor: AppColors.primaryWhite,
-              title:Center(child: Text("Random Letter",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),)),
+              title:Center(child: Text("Random Wikipedia",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),)),
               content: Center(
                 child: Container(
                   child:RaisedButton(
@@ -1162,6 +1162,51 @@ color(BuildContext context){
                     color: Colors.teal,
                     disabledColor: Colors.teal,
                   ),
+                ),
+              )
+            );
+          }
+        );
+      }
+    );
+  }
+
+  dogs(BuildContext context){
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return StatefulBuilder(
+          builder:(context,setState){
+            return AlertDialog(
+              scrollable: true,
+              actions: <Widget>[
+                RaisedButton(
+                  onPressed:(){                  
+                    setState((){
+                      fetchDog();
+                    });
+                  },
+                  child:Text("Randomize",style: TextStyle(fontSize:20,fontWeight: FontWeight.bold,color: Colors.white)),
+                  color: Colors.teal,
+                  disabledColor: Colors.teal,
+                ),
+                SizedBox(width: 20,),                               
+                FlatButton(
+                  onPressed:(){
+                    Navigator.pop(context);},
+                  child: Text("Done",style: TextStyle(fontSize:18),)),
+              ],
+              backgroundColor: AppColors.primaryWhite,
+              title:Center(child: Text("Random Dog breed",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),)),
+              content: Center(
+                child: Column(
+                  children: <Widget>[
+     
+                    SizedBox(height:10),
+                    Text("Name:${globals.dogList[0].name}",style: TextStyle(color: Colors.indigo,fontWeight: FontWeight.w500,fontSize: 18),textAlign: TextAlign.center,),
+                    Text("Life span:${globals.dogList[0].life_span}",style: TextStyle(color: Colors.indigo,fontWeight: FontWeight.w500,fontSize: 18),),
+                    Text("Continent:${globals.dogList[0].temperament}",style: TextStyle(color: Colors.indigo,fontWeight: FontWeight.w500,fontSize: 18),textAlign: TextAlign.center,),
+                  ],
                 ),
               )
             );

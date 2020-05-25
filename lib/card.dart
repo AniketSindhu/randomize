@@ -70,6 +70,8 @@ class _CardsState extends State<Cards> {
         break;
       case "Random wikipedia page":wikipedia(context);
         break;
+      case "Random dog breed":dogs(context);
+        break;
       default:
     }
   }

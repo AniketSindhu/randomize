@@ -83,6 +83,7 @@ class _HomePageState extends State<HomePage> {
     fetchCountries();
     fetchGame();
     fetchElement();
+    fetchDog();
   }
 @override
   void dispose(){

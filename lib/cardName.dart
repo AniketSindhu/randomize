@@ -28,4 +28,5 @@ import 'package:flutter_icons/flutter_icons.dart';
     const Choice(title: 'Random game', icon:Icon(FlutterIcons.gamepad_faw5s,color: Colors.teal,size: 60,)),
     const Choice(title: 'Random element', icon:Icon(FlutterIcons.atom_faw5s,color: Colors.teal,size: 60,)),
     const Choice(title: 'Random wikipedia page', icon:Icon(FlutterIcons.wikipedia_zoc,color: Colors.teal,size: 60,)),
+    const Choice(title: 'Random dog breed', icon:Icon(FlutterIcons.dog_faw5s,color: Colors.teal,size: 60,)),
   ];
