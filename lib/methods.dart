@@ -1201,7 +1201,13 @@ color(BuildContext context){
               content: Center(
                 child: Column(
                   children: <Widget>[
-     
+                    Container(
+                      child:Image.network(
+                              '${globals.dogimg[0].source}',
+                              width: MediaQuery.of(context).size.width/2,
+                              height: MediaQuery.of(context).size.width/2,
+                            )
+                    ),
                     SizedBox(height:10),
                     Text("Name:${globals.dogList[0].name}",style: TextStyle(color: Colors.indigo,fontWeight: FontWeight.w500,fontSize: 18),textAlign: TextAlign.center,),
                     Text("Life span:${globals.dogList[0].life_span}",style: TextStyle(color: Colors.indigo,fontWeight: FontWeight.w500,fontSize: 18),),

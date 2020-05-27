@@ -107,6 +107,8 @@ fetchDog() async {
     print('done');
         var data = json.decode(response.body);
         var rest = data["breeds"] as List;
+        var img =data as List;
+        globals.dogimg=img.map<Dogimage>((json) => Dogimage.fromJson(json)).toList();
         globals.dogList = rest.map<Dogs>((json) => Dogs.fromJson(json)).toList();
   } else {
     throw Exception('Failed to load deck');
