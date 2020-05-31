@@ -3,6 +3,7 @@ import 'package:randomize/data/dog.dart';
 import 'package:randomize/data/elements.dart';
 import 'data/Movies.dart';
 import 'data/games.dart';
+import 'data/meal.dart';
  
   String deckId;
   int count=1;
@@ -18,5 +19,6 @@ import 'data/games.dart';
   List<Game> gameList=List();
   List<Elements> elementList=List();
   List<Dogs> dogList=List();
-  List<Dogimage> dogimg=List();  
+  List<Dogimage> dogimg=List(); 
+  List<Meal> foodList=List();   
   String pass;

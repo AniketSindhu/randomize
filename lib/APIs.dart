@@ -8,6 +8,7 @@ import 'data/cards.dart';
 import 'data/countries.dart';
 import 'data/elements.dart';
 import 'data/facts.dart';
+import 'data/meal.dart';
 import 'globals.dart'as globals;
 
 Future<Deck> fetchDeck() async {
@@ -106,10 +107,22 @@ fetchDog() async {
   if (response.statusCode == 200) {
     print('done');
         var data = json.decode(response.body);
-        var rest = data["breeds"] as List;
+        var rest = data[0]['breeds'] as List;
         var img =data as List;
         globals.dogimg=img.map<Dogimage>((json) => Dogimage.fromJson(json)).toList();
         globals.dogList = rest.map<Dogs>((json) => Dogs.fromJson(json)).toList();
+  } else {
+    throw Exception('Failed to load deck');
+    }
+  }
+
+fetchFood() async {
+
+  final response = await http.get('https://www.themealdb.com/api/json/v1/1/random.php');
+  if (response.statusCode == 200) {
+        var data = json.decode(response.body);
+        var rest = data['meals'] as List;
+        globals.foodList = rest.map<Meal>((json) => Meal.fromJson(json)).toList();
   } else {
     throw Exception('Failed to load deck');
     }

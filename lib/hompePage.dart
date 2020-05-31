@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
   
   BannerAd CreateBannerAd(){
     return BannerAd(
-      adUnitId: BannerAd.testAdUnitId,
+      adUnitId: 'ca-app-pub-8295782880270632/6775367851',
       size: AdSize.fullBanner,
       targetingInfo: targetingInfo,
       listener: (MobileAdEvent event){
@@ -84,6 +84,7 @@ class _HomePageState extends State<HomePage> {
     fetchGame();
     fetchElement();
     fetchDog();
+    fetchFood();
   }
 @override
   void dispose(){
@@ -109,10 +110,10 @@ class _HomePageState extends State<HomePage> {
                        decoration: BoxDecoration(
                          color: Colors.teal,
                          image: DecorationImage(
-                           image: AssetImage("assets/mask.jpg"),
-                            fit: BoxFit.cover),
+                           image: AssetImage("assets/icon.png"),
+                            fit: BoxFit.fill),
                        ),
-                       child: Align(alignment:Alignment.bottomLeft,child: Text('Randomize',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),)),
+                       child: Align(alignment:Alignment.bottomLeft,child: Text('Randomize',style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold,color: Colors.black),)),
                      ),
                      ListTile(
                        title: Text('Share with your friends',style: TextStyle(fontSize:20,color: Colors.black),),
@@ -138,13 +139,6 @@ class _HomePageState extends State<HomePage> {
                       },
                      ),
                       Divider(height:3,color: Colors.black,),
-                      ListTile(
-                      title: Text('Try Randomize',style: TextStyle(fontSize:20,color: Colors.black),),
-                      leading: Icon(Icons.play_arrow,size: 40,color: Colors.teal,),
-                       onTap: () {
-                          launch('https://play.google.com/store/apps/details?id=com.aniket.randomize');
-                       },
-                      )
                     ],
                   ),
               ),

@@ -24,7 +24,7 @@ class _CardsState extends State<Cards> {
 
   InterstitialAd CreateInterstitialAd(){
     return InterstitialAd(
-      adUnitId: InterstitialAd.testAdUnitId,
+      adUnitId: 'ca-app-pub-8295782880270632/6252909088',
       targetingInfo: targetingInfo,
       listener: (MobileAdEvent event){
           print("InterstitialAd $event");
@@ -71,6 +71,8 @@ class _CardsState extends State<Cards> {
       case "Random wikipedia page":wikipedia(context);
         break;
       case "Random dog breed":dogs(context);
+        break;
+      case "Random dish":food(context);
         break;
       default:
     }

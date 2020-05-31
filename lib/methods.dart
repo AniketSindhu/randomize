@@ -1186,7 +1186,7 @@ color(BuildContext context){
                       fetchDog();
                     });
                   },
-                  child:Text("Randomize",style: TextStyle(fontSize:20,fontWeight: FontWeight.bold,color: Colors.white)),
+                  child:Text("Randomize",style: TextStyle(fontSize:20,fontWeight: FontWeight.bold,color: Colors.black)),
                   color: Colors.teal,
                   disabledColor: Colors.teal,
                 ),
@@ -1202,16 +1202,88 @@ color(BuildContext context){
                 child: Column(
                   children: <Widget>[
                     Container(
-                      child:Image.network(
-                              '${globals.dogimg[0].source}',
-                              width: MediaQuery.of(context).size.width/2,
-                              height: MediaQuery.of(context).size.width/2,
-                            )
+                      child:Stack(
+                        alignment: Alignment.center,
+                        children: <Widget>[
+                          Center(child: CircularProgressIndicator()),
+                          Image.network(
+                            '${globals.dogimg[0].source}',
+                            width: MediaQuery.of(context).size.width/2,
+                            height: MediaQuery.of(context).size.width/2,
+                          ),
+                        ],
+                      )
                     ),
                     SizedBox(height:10),
-                    Text("Name:${globals.dogList[0].name}",style: TextStyle(color: Colors.indigo,fontWeight: FontWeight.w500,fontSize: 18),textAlign: TextAlign.center,),
-                    Text("Life span:${globals.dogList[0].life_span}",style: TextStyle(color: Colors.indigo,fontWeight: FontWeight.w500,fontSize: 18),),
-                    Text("Continent:${globals.dogList[0].temperament}",style: TextStyle(color: Colors.indigo,fontWeight: FontWeight.w500,fontSize: 18),textAlign: TextAlign.center,),
+                    Text("Name:${globals.dogList[0].name}",style: TextStyle(color: Colors.indigo[900],fontWeight: FontWeight.w500,fontSize: 18),textAlign: TextAlign.center,),
+                    Text("Life span:${globals.dogList[0].life_span}",style: TextStyle(color: Colors.indigo[900],fontWeight: FontWeight.w500,fontSize: 18),),
+                    Text("Temprament:${globals.dogList[0].temperament}",style: TextStyle(color: Colors.indigo[900],fontWeight: FontWeight.w500,fontSize: 18),textAlign: TextAlign.center,),
+                  ],
+                ),
+              )
+            );
+          }
+        );
+      }
+    );
+  }
+
+  food(BuildContext context){
+    String img=globals.foodList[0].image;
+    String url=globals.foodList[0].url;
+    String name=globals.foodList[0].name;
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return StatefulBuilder(
+          builder:(context,setState){
+            return AlertDialog(
+              scrollable: true,
+              actions: <Widget>[
+                RaisedButton(
+                  onPressed:(){  
+                    fetchFood();                
+                    setState((){
+                      img=globals.foodList[0].image;
+                      url=globals.foodList[0].url;
+                      name=globals.foodList[0].name;
+                    });
+                  },
+                  child:Text("Randomize",style: TextStyle(fontSize:20,fontWeight: FontWeight.bold,color: Colors.black)),
+                  color: Colors.teal,
+                  disabledColor: Colors.teal,
+                ),
+                SizedBox(width: 20,),                               
+                FlatButton(
+                  onPressed:(){
+                    Navigator.pop(context);},
+                  child: Text("Done",style: TextStyle(fontSize:18),)),
+              ],
+              backgroundColor: AppColors.primaryWhite,
+              title:Center(child: Text("Random Dish",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),)),
+              content: Center(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      child:Stack(
+                        alignment: Alignment.center,
+                        children: <Widget>[
+                          Center(child: CircularProgressIndicator()),
+                          Image.network(
+                            img,
+                            width: MediaQuery.of(context).size.width/2,
+                            height: MediaQuery.of(context).size.width/2,
+                          ),
+                        ],
+                      )
+                    ),
+                    SizedBox(height:20),
+                    Text("Dish:$name",style: TextStyle(color: Colors.indigo[900],fontWeight: FontWeight.w500,fontSize: 20),textAlign: TextAlign.center,),
+                    SizedBox(height:10),
+                    OutlineButton(
+                      child:Text("Recipe",style: TextStyle(color:Colors.black,fontSize: 22,fontWeight: FontWeight.bold),),
+                      borderSide: BorderSide(width:3,color:Colors.teal),
+                      onPressed:(){launch(url);})
                   ],
                 ),
               )
