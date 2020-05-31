@@ -111,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                          color: Colors.teal,
                          image: DecorationImage(
                            image: AssetImage("assets/icon.png"),
-                            fit: BoxFit.fill),
+                            fit: BoxFit.scaleDown),
                        ),
                        child: Align(alignment:Alignment.bottomLeft,child: Text('Randomize',style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold,color: Colors.black),)),
                      ),
